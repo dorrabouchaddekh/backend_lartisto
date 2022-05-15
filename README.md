@@ -1,1 +1,1 @@
-# backend_lartisto
+This is the backend for the art app
