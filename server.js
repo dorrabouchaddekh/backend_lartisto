@@ -54,8 +54,8 @@ const categorieRoute=require('./routes/categorie')
 const categorieController=require('./controllers/CategorieController')
 const linkRoute=require('./routes/link')
 const linkController=require('./controllers/LinkController')
-
-
+const eventController=require('./controllers/EventsController')
+const eventRoute=require('./routes/events')
 
 
 //mongodb+srv://dorra_bouchaddekh:<password>@lartistodb.1w6wr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
@@ -132,7 +132,7 @@ app.use('/api/enchere', enchereRoute)
 app.use('/api/categorie', categorieRoute)
 app.use('/api/user', AuthRoute)
 app.use('/api/link', linkRoute)
-
+app.use('/api/event', eventRoute)
 
 
 app.use(express.static("public"));

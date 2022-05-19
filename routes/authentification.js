@@ -66,7 +66,62 @@ const showall= (req,res,next)=> {
         })
     })
 }
+
+
 //======================================================
+
+
+
+
+//================================================
+
+// const {OAuth2Client} = require('google-auth-library');
+// const client = new OAuth2Client(CLIENT_ID);
+// async function verify() {
+//   const ticket = await client.verifyIdToken({
+//       idToken: token,
+//       audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+//       // Or, if multiple clients access the backend:
+//       //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+//   });
+//   const payload = ticket.getPayload();
+//   const userid = payload['sub'];
+//   // If request specified a G Suite domain:
+//   // const domain = payload['hd'];
+// }
+// verify().catch(console.error);
+
+//================================================
+const RegisterWithGoogle = async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (user != null) {
+    res.status(201).send({ message: "success", use: user });
+  } else {
+    const newUser = new User();
+    //const newProfil = new Profil();
+    //encyptedPassword = await bcypt.hash(req.body., 10);
+
+    newUser.email = req.body.email;
+    newUser.firstname = req.body.firstname;
+    newUser.lastname = req.body.lastname;
+    newUser.pictureId = req.body.pictureId;
+    newUser.isVerified = true;
+
+    //newUser.password = encyptedPassword;
+    //newUser.profile = newProfil._id;
+
+    newUser.save();
+  //  newProfil.save();
+    SetupUserFolder(newUser._id);
+    // token creation
+    const token = jwt.sign({ id: newUser._id }, keys.jwtkey, {
+      expiresIn: "360000",
+    });
+    // SendEmail(email, token);
+    res.status(201).send({ message: "success", user: newUser, token });
+  }
+};
+
 
 
 
@@ -402,7 +457,7 @@ const updateProfile = async (req, res) => {
 
     
 module.exports ={
-register,login,reEnvoyerConfirmationEmail,confirmation,show,showall,ChangeProfilePic,motDePasseOublie,changerMotDePasse,updateProfile
+register,login,reEnvoyerConfirmationEmail,confirmation,show,showall,ChangeProfilePic,motDePasseOublie,changerMotDePasse,updateProfile,RegisterWithGoogle
 }
 
 

@@ -8,17 +8,76 @@ const upload = require('../middleware/storage-user');
 const AuthController  = require('../routes/authentification')
 
 router.post("/changeprofile/pic/:id", AuthController.ChangeProfilePic);
+
+
+
+
+/**
+ * @swagger
+ * /api/user/register:
+ *  post:
+ *      description: see users
+ *      responses:
+ *          200:
+ *              description: 
+ *                  new user created!
+ */
 router.post('/register', AuthController.register)
+
+
+
 router.post('/login',AuthController.login)
+
+
+
+/**
+ * @swagger
+ * /api/user/show:
+ *  post:
+ *      description: see users
+ *      parameters:
+ *       - in: formData
+ *         _id: _id
+ *         type: string
+ *      responses:
+ *          200:
+ *              description: 
+ *                  new user created!
+ */
 router.route("/show").post(AuthController.show);
 //router.route('/show',AuthController.show)
 router.post("/reEnvoyerConfirmationEmail", AuthController.reEnvoyerConfirmationEmail);
 router.get("/confirmation/:token", AuthController.confirmation);
+
+
+
+// Getting All
+/**
+ * @swagger
+ * /api/user/showall:
+ *  get:
+ *      responses:
+ *          200:
+ *              description: 
+ *                  new user created!
+ */
 router.get("/showall", AuthController.showall);
 router.post("/motDePasseOublie", AuthController.motDePasseOublie);
 router.put("/changerMotDePasse", AuthController.changerMotDePasse);
-router.put("/updateProfile", AuthController.updateProfile);
 
+
+/**
+ * @swagger
+ * /api/user/updateProfile:
+ *  post:
+ *      description: see users
+ *      responses:
+ *          200:
+ *              description: 
+ *                  new user created!
+ */
+router.put("/updateProfile", AuthController.updateProfile);
+router.post("/RegisterWithGoogle", AuthController.RegisterWithGoogle);
 
 module.exports = router
 
